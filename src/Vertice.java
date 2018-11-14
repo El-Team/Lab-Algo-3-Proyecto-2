@@ -7,12 +7,34 @@
 
 public class Vertice<E> {
 
-	/** Identificador asociado al vertice **/
+	/**
+	 * Identificador asociado al vertice
+	 */
 	private String id;
-	/** Dato que se quiere almacenar en el vertice **/
+	/**
+	 * Dato que se quiere almacenar en el vertice. Representa el número de
+	 * personas que puden ir al baño en este edificio.
+	 */
 	private E dato;
-	/** Peso asociado al vertice **/
+	/**
+	 * Peso asociado al vertice. Representa el número de pisos que hay que subir
+	 * para encontrar un baño.
+	 */
 	private double peso;
+	/**
+	 * Indica si el edificio representado por el vértice tiene agua.
+	 */
+	private boolean hasWater;
+	/**
+	 * Indica la distancia mínima encontrada a partir del vértice de inicio.
+	 */
+	private Double shortestDist;
+	/**
+	 * Id del vértice previo al vértice actual en la cadena que representa el
+	 * camino más corto encontrado hasta el momento.
+	 */
+	private String prevVertexInShortestPath;
+
 
 	/** Constructor del TAD Vertice: 
 	* 		@param id 	representa el identificador
@@ -23,6 +45,9 @@ public class Vertice<E> {
 		this.id = id;
 		this.dato = dato;
 		this.peso = p;
+		this.hasWater = false;
+		this.shortestDist = Double.MAX_VALUE;
+		this.prevVertexInShortestPath = null;
 	}
 
 	/** Funcion para obtener el peso del vertice
@@ -44,6 +69,30 @@ public class Vertice<E> {
 	*/
 	public E getDato() {
 		return this.dato;
+	}
+
+	public boolean getHasWater() {
+		return this.hasWater;
+	}
+
+	public Double getShortestDist() {
+		return this.shortestDist;
+	}
+
+	public String getPrevVertexInShortestPath() {
+		return this.prevVertexInShortestPath;
+	}
+
+	public void setHasWater(boolean newHasWater) {
+		this.hasWater = newHasWater;
+	}
+
+	public void getShortestDist(Double newShortestDist) {
+		this.shortestDist = newShortestDist;
+	}
+
+	public void getPrevVertexInShortestPath(String newPrevVertexInShortestPath) {
+		this.prevVertexInShortestPath = newPrevVertexInShortestPath;
 	}
 
 	/** Funcion para obtener toda la informacion del vertice
