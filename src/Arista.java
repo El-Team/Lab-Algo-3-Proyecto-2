@@ -15,9 +15,10 @@ public class Arista<E> extends Lado<E> {
 	private Vertice v;
 	/**
 	 * Identificador que corresponde al número de línea en el archivo original
-	 * acorde con la especificación (sirve para identificar al lado en los casos).
+	 * acorde con la especificación (entre 0 (inclusive) y m (exclusive), con m
+	 * el número total de lados). Sirve para identificar al lado en los casos.
 	 */
-	private String lineId;
+	private int lineId;
 
 	/** Constructor del TAD Arista: 
 	* 		@param id 	representa el identificador
@@ -27,7 +28,7 @@ public class Arista<E> extends Lado<E> {
 	* 		@param vf 	{@link Vertice} extremo 2
 	*/
 	public Arista(
-		String id, E dato, double p, Vertice u, Vertice v, String lineId
+		String id, E dato, double p, Vertice u, Vertice v, int lineId
 	) {
 		super(id, dato, p);
 		this.u = u;
@@ -49,11 +50,11 @@ public class Arista<E> extends Lado<E> {
 		return this.v;
 	}
 
-	public String getLineId() {
+	public int getLineId() {
 		return this.lineId;
 	}
 
-	public void setLineId(String newLineId) {
+	public void setLineId(int newLineId) {
 		this.lineId = newLineId;
 	}
 
