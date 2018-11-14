@@ -1,8 +1,9 @@
+import java.lang.Integer;
+
 /**
 * Subtipo del TAD {@link Lado} que representa los Lados que componen
 * al TAD {@link GrafoNoDirigido}.	
 */
-
 public class Arista<E> extends Lado<E> {
 
 	/**
@@ -18,7 +19,7 @@ public class Arista<E> extends Lado<E> {
 	 * acorde con la especificación (entre 0 (inclusive) y m (exclusive), con m
 	 * el número total de lados). Sirve para identificar al lado en los casos.
 	 */
-	private int lineId;
+	private Integer lineId;
 
 	/** Constructor del TAD Arista: 
 	* 		@param id 	representa el identificador
@@ -28,7 +29,7 @@ public class Arista<E> extends Lado<E> {
 	* 		@param vf 	{@link Vertice} extremo 2
 	*/
 	public Arista(
-		String id, E dato, double p, Vertice u, Vertice v, int lineId
+		String id, E dato, double p, Vertice u, Vertice v, Integer lineId
 	) {
 		super(id, dato, p);
 		this.u = u;
@@ -50,11 +51,11 @@ public class Arista<E> extends Lado<E> {
 		return this.v;
 	}
 
-	public int getLineId() {
+	public Integer getLineId() {
 		return this.lineId;
 	}
 
-	public void setLineId(int newLineId) {
+	public void setLineId(Integer newLineId) {
 		this.lineId = newLineId;
 	}
 
