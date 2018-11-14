@@ -111,12 +111,12 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 
 		// Cargar datos
 
-		this.setVertexCount(Integer.parseInt(lines.get(3)));
-		this.setEdgeCount(Integer.parseInt(lines.get(4)));
+		this.setVertexCount(Integer.parseInt(lines.get(0)));
+		this.setEdgeCount(Integer.parseInt(lines.get(1)));
 
 		LinkedHashMap<String, Vertice<V>> importedVertices =
 			new LinkedHashMap<String, Vertice<V>>();
-		for (int i = 5; i < 5 + this.getVertexCount(); i++) {
+		for (int i = 2; i < 2 + this.getVertexCount(); i++) {
 			String[] vertexData = lines.get(i).split("\\s");
 			Vertice<V> v = new Vertice<V>(
 				vertexData[0],
@@ -130,20 +130,22 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 
 		LinkedHashMap<String, Lado<L>> importedEdges =
 			new LinkedHashMap<String, Lado<L>>();
-		for (int i = 5 + this.getVertexCount(); i < lines.size(); i++) {
+		for (int i = 2 + this.getVertexCount(); i < lines.size(); i++) {
 
 			String[] edgeData = lines.get(i).split("\\s");
-			Vertice<V> vi = this.obtenerVertice(this, edgeData[3]);
-			Vertice<V> vf = this.obtenerVertice(this, edgeData[4]);
+			Vertice<V> vi = this.obtenerVertice(this, edgeData[0]);
+			Vertice<V> vf = this.obtenerVertice(this, edgeData[1]);
+			Integer lineId = i - 2 - this.getVertexCount();
 
 			Arista<L> e = new Arista<L>(
-				edgeData[0],
-				(L)edgeData[1],
-				Double.parseDouble(edgeData[2]),
+				edgeData[0] + "-" + edgeData[1],
+				(L)edgeData[2],
+				Double.parseDouble(edgeData[3]),
 				vi,
-				vf
+				vf,
+				lineId
 			);
-			importedEdges.put(edgeData[0], e);
+			importedEdges.put(edgeData[0] + "-" + edgeData[1], e);
 		}
 		this.setEdges(importedEdges);
 
@@ -439,7 +441,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			}
 			Vertice<V> vi = g.obtenerVertice(this, u);
 			Vertice<V> vf = g.obtenerVertice(this, v);
-			Arista<L> a = new Arista(id, dato, p, vi, vf);
+			Arista<L> a = new Arista(id, dato, p, vi, vf, null);
 			castedGraph.getEdges().put(a.getId(), a);
 		}
 		catch(Error e) {
