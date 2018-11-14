@@ -39,8 +39,8 @@ public class Utilidades {
 				Paths.get(filename),
 				Charset.defaultCharset()
 			);
-			n = Integer.parseInt(lines.get(3));
-			m = Integer.parseInt(lines.get(4));
+			n = Integer.parseInt(lines.get(0));
+			m = Integer.parseInt(lines.get(1));
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -55,8 +55,9 @@ public class Utilidades {
 		}
 
 		String regexStr =
-			"(B|D|S),(B|D|S),(D|N),[0-9]+,[0-9]+,((\\S)+\\s(\\S)+\\s[0-9]+,){" +
-			n.toString() + "}((\\S)+\\s(\\S)+\\s[0-9]+\\s(\\S)+\\s(\\S)+,){" +
+			"[0-9]+,[0-9]+," +
+			"([A-Z]+[0-9]*\\s[0-9]+\\s[0-9]+,){" + n.toString() + "}" +
+			"(([A-Z]+[0-9]*)\\s([A-Z]+[0-9]*)\\s[0-9]+\\s[0-9]+(.[0-9]+){0,1},){" +
 			m.toString() + "}";
 		Pattern regexPattern = Pattern.compile(regexStr);
 		Matcher match = regexPattern.matcher(fileContent);
