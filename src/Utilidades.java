@@ -28,7 +28,7 @@ public class Utilidades {
 	/**
 	 * Verifica que el archivo tenga el formato correcto
 	 */
-	public static boolean documentHasValidFormat(String filename) {
+	public static boolean documentHasValidFormat(String filename, String typeOfFile) {
 		List<String> lines = null;
 		String fileContent = "";
 		Integer n = 0;
@@ -54,11 +54,13 @@ public class Utilidades {
 			fileContent += ",";
 		}
 
-		String regexStr =
-			"[0-9]+,[0-9]+," +
-			"([A-Z]+[0-9]*\\s[0-9]+\\s[0-9]+,){" + n.toString() + "}" +
-			"(([A-Z]+[0-9]*)\\s([A-Z]+[0-9]*)\\s[0-9]+\\s[0-9]+(.[0-9]+){0,1},){" +
-			m.toString() + "}";
+		String regexStr = typeOfFile.equals("graph")
+			? "[0-9]+,[0-9]+," +
+			  "([A-Z]+[0-9]*\\s[0-9]+\\s[0-9]+,){" + n.toString() + "}" +
+			  "(([A-Z]+[0-9]*)\\s([A-Z]+[0-9]*)\\s[0-9]+\\s[0-9]+(.[0-9]+){0,1},){" +
+			  m.toString() + "}"
+			: "";
+
 		Pattern regexPattern = Pattern.compile(regexStr);
 		Matcher match = regexPattern.matcher(fileContent);
 

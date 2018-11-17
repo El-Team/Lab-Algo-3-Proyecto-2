@@ -80,7 +80,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			if (!Utilidades.isValidPath(archivo)) {
 				throw new FileNotFoundException();
 			}
-			else if (!Utilidades.documentHasValidFormat(archivo)) {
+			else if (!Utilidades.documentHasValidFormat(archivo, "graph")) {
 				throw new ParseException("", 0);
 			}
 		}

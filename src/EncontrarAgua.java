@@ -5,6 +5,7 @@
  */
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.lang.NumberFormatException;
 
 public class EncontrarAgua {
 
@@ -12,25 +13,26 @@ public class EncontrarAgua {
 	 * Grafo inicial tal cual fue importado sin tomar en cuenta las
 	 * modificaciones introducidas por cada caso.
 	 */
-	GrafoNoDirigido<Integer, Integer> baseGraph;
+	private static GrafoNoDirigido<Integer, Integer> baseGraph = 
+		new GrafoNoDirigido<Integer, Integer>();
 	/**
 	 * Diccionario donde cada clave corresponde al identificador de un caso y
 	 * cada valor corresponde a un grafo modificado acorde al caso con el
 	 * identificador de la clave.
 	 */
-	LinkedHashMap<String, GrafoNoDirigido<Integer, Integer>> caseBasedGraphs;
+	private static LinkedHashMap<String, GrafoNoDirigido<Integer, Integer>> caseBasedGraphs;
 	/**
 	 * Lista de casos importados.
 	 */
-	ArrayList<Case> cases = new ArrayList();
+	private static ArrayList<Case> cases = new ArrayList();
 	/**
 	 * Id del vértice de partida.
 	 */
-	String origin;
+	private static String origin;
 	/**
 	 * Cantidad de personas a las que se les debe asignar baño.
 	 */
-	int numOfPeople;
+	private static int numOfPeople;
 
 
 
@@ -41,7 +43,7 @@ public class EncontrarAgua {
 	 * necesaria para llegar a los baños disponibles en dichos edificios.
 	 */
 	private static void importGraphFrom(String filename) {
-
+		baseGraph.cargarGrafo(baseGraph, filename);
 	}
 	
 	/**
@@ -156,10 +158,36 @@ public class EncontrarAgua {
 	}
 
 	/**
+	 * Imprime una línea de la forma “N personas a Z Ruta: X - Y - Z (M m)”
+	 */
+	public static void printResultsFor(ShortestPath path) {
+
+	}
+
+	/**
 	 * Rutina principal
 	 */
 	public static void main(String[] args) {
 
-		System.out.println("Sup?");
+		if (args.length != 4) {
+			System.out.println(
+				"Debe introducir un comando de la forma:\n" +
+				"	EncontrarAgua <grafo.txt> <casos.txt> <edif> <numDePersonas>"
+			);
+			System.exit(0);
+		}
+
+		try {
+			numOfPeople = Integer.parseInt(args[3]);
+		}
+		catch(NumberFormatException e) {
+			System.out.println("Número de personas incorrecto");
+			System.exit(0);
+		}
+
+		importGraphFrom(args[0]);
+		importCasesFrom(args[1]);
+		createGraphsAccordingToCases();
+		distributePeopleFrom(args[2]);
 	}
 }
