@@ -37,31 +37,31 @@ public class Case {
 		this.unavailableEdges = unavailableEdges;
 	}
 
-	private String getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	private ArrayList<String> getVerticesWithWater() {
+	public ArrayList<String> getVerticesWithWater() {
 		return this.verticesWithWater;
 	}
 
-	private LinkedHashMap<String, Integer> getVertexWeightUpdates() {
+	public LinkedHashMap<String, Integer> getVertexWeightUpdates() {
 		return this.vertexWeightUpdates;
 	}
 
-	private ArrayList<String> getUnavailableEdges() {
+	public ArrayList<String> getUnavailableEdges() {
 		return this.unavailableEdges;
 	}
 
-	private void setId(String newId) {
+	public void setId(String newId) {
 		this.id = newId;
 	}
 
-	private void setVerticesWithWater(ArrayList<String> newVerticesWithWater) {
+	public void setVerticesWithWater(ArrayList<String> newVerticesWithWater) {
 		this.verticesWithWater = newVerticesWithWater;
 	}
 
-	private void setVertexWeightUpdates(
+	public void setVertexWeightUpdates(
 		LinkedHashMap<String, Integer> newVertexWeightUpdates
 	) {
 		this.vertexWeightUpdates = newVertexWeightUpdates;

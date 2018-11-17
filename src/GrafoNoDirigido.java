@@ -477,4 +477,36 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 		}
 		return a;
 	}
+
+
+	/**
+	 * Elimina las aristas afectadas por las lluvias.
+	 */
+	public void deleteAffectedEdges(Case _case) {
+
+	}
+	
+	/**
+	 * Actualiza los valores del peso en los vértices del grafo conforme a las
+	 * modificaciones planteadas en el caso.
+	 */
+	public void updateVertexWeights(Case _case) {
+
+	}
+	
+	/**
+	 * Actualiza las distancias en las aristas para reflejar la distancia exacta
+	 * entre los baños disponibles en los edificios.
+	 */
+	public void updateEdgeWeights(Case _case) {
+
+	}
+	
+	/**
+	 * Actualiza el valor hasWater en los vértices del grafo conforme a lo
+	 * planteado en el caso.
+	 */
+	public void updateWaterAvailability(Case _case) {
+
+	}
 }

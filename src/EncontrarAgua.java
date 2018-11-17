@@ -27,7 +27,8 @@ public class EncontrarAgua {
 	 * cada valor corresponde a un grafo modificado acorde al caso con el
 	 * identificador de la clave.
 	 */
-	private static LinkedHashMap<String, GrafoNoDirigido<Integer, Integer>> caseBasedGraphs;
+	private static LinkedHashMap<String, GrafoNoDirigido<Integer, Integer>> 
+		caseBasedGraphs = new LinkedHashMap();
 	/**
 	 * Lista de casos importados.
 	 */
@@ -146,46 +147,18 @@ public class EncontrarAgua {
 	}
 	
 	/**
-	 * Elimina las aristas afectadas por las lluvias.
-	 */
-	private static void deleteAffectedEdges() {
-
-	}
-	
-	/**
-	 * Actualiza los valores del peso en los vértices del grafo conforme a las
-	 * modificaciones planteadas en el caso.
-	 */
-	private static void updateVertexWeights() {
-
-	}
-	
-	/**
-	 * Actualiza las distancias en las aristas para reflejar la distancia exacta
-	 * entre los baños disponibles en los edificios.
-	 */
-	private static void updateEdgeWeights() {
-
-	}
-	
-	/**
-	 * Actualiza el valor hasWater en los vértices del grafo conforme a lo
-	 * planteado en el caso.
-	 */
-	private static void updateWaterAvailability() {
-
-	}
-	
-	/**
 	 * Modifica los datos del grafo importado acorde con el caso planteado.
 	 */
-	private static void updateGraphAccordingToCase(Case c) {
-		/*
-		deleteAffectedEdges()
-		updateVertexWeights()
-		updateEdgeWeights()
-		updateWaterAvailability()
-		*/
+	private static void createGraphAccordingToCase(Case _case) {
+
+		GrafoNoDirigido<Integer, Integer> caseGraph =
+			(GrafoNoDirigido<Integer, Integer>)baseGraph.clone(baseGraph);
+		caseGraph.deleteAffectedEdges(_case);
+		caseGraph.updateVertexWeights(_case);
+		caseGraph.updateEdgeWeights(_case);
+		caseGraph.updateWaterAvailability(_case);
+
+		caseBasedGraphs.put(_case.getId(), caseGraph);
 	}
 	
 	/**
@@ -198,6 +171,9 @@ public class EncontrarAgua {
 		Por cada nuevo grafo en caseBasedGraphs:
 			updateGraphAccordingToCase(Case case)
 		*/
+		for (Case c : cases) {
+			createGraphAccordingToCase(c);
+		}
 	}
 	
 	/**
