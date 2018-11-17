@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class ShortestPath {
 
 	/**
-	 * Lista de Aristas que hacen este camino.
+	 * Lista de Vertices que hacen este camino.
 	 */
-	private ArrayList<Arista> path;
+	private ArrayList<Vertice> path;
 	/**
 	 * Distancia total recorrida en este camino.
 	 */
@@ -18,13 +18,13 @@ public class ShortestPath {
 	 */
 	private int peopleSent;
 
-	public ShortestPath(ArrayList<Arista> path, Double distance, int peopleSent) {
+	public ShortestPath(ArrayList<Vertice> path, Double distance, int peopleSent) {
 		this.path = path;
 		this.distance = distance;
 		this.peopleSent = 0;
 	}
 
-	public ArrayList<Arista> getPath() {
+	public ArrayList<Vertice> getPath() {
 		return this.path;
 	}
 
@@ -36,7 +36,7 @@ public class ShortestPath {
 		return this.peopleSent;
 	}
 
-	public void setPath(ArrayList<Arista> newPath) {
+	public void setPath(ArrayList<Vertice> newPath) {
 		this.path = newPath;
 	}
 
