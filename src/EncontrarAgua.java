@@ -3,9 +3,16 @@
  * un número de personas en ese edificio, le asigne el baño a todas el baño más
  * cercano disponible en todos los casos.
  */
+import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.lang.NumberFormatException;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.Charset;
+import java.io.IOException;
 
 public class EncontrarAgua {
 
@@ -51,7 +58,91 @@ public class EncontrarAgua {
 	 * nueva instancia de Case por cada caso y la almacena en la propiedad cases).
 	 */
 	private static void importCasesFrom(String filename) {
+		try {
+			if (!Utilidades.isValidPath(filename)) {
+				throw new FileNotFoundException();
+			}
+			else if (!Utilidades.documentHasValidFormat(filename, "cases")) {
+				throw new ParseException("", 0);
+			}
+		}
+		catch(FileNotFoundException e) {
+			System.out.println("No fue posible importar el archivo, verifique que el nombre es el correcto");
+		}
+		catch(ParseException e) {
+			System.out.println("El documento que contiene a los CASOS no tiene el formato correcto");
+		}
 
+
+		// Importar archivo
+		List<String> lines = null;
+		try {
+			lines = Files.readAllLines(
+				Paths.get(filename),
+				Charset.defaultCharset()
+			);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+
+
+		// Calcular número de casos
+		int numOfCases = 0;
+		String prevLine;
+		for (int i = 0; i < lines.size(); i++) {
+			if (i > 0) {
+				prevLine = lines.get(i-1);
+			}
+			if (lines.get(i).trim().equals("")) {
+				if (lines.get(i-1).trim().equals("")) {
+					break;
+				}
+				else {
+					numOfCases++;
+				}
+			}
+		}
+
+
+		int offset = 0;
+		for (int j = 0; j < numOfCases; j++) {
+
+			int e  = Integer.parseInt(lines.get(offset + 1)); // num de vertexWeightUpdates
+			int a  = Integer.parseInt(lines.get(offset + 2)); // num de unavailableEdges
+			int v1 = offset + 3;
+			int ve = offset + 2 + e;
+			int l1 = offset + 2 + e + 1;
+			int la = offset + 2 + e + a;
+
+
+			String id = lines.get(offset);
+			ArrayList<String> verticesWithWater = new ArrayList();
+			LinkedHashMap<String, Integer> vertexWeightUpdates = new LinkedHashMap<String, Integer>();
+			ArrayList<String> unavailableEdges = new ArrayList();
+
+			for (int v = v1; v <= ve; v++) {
+				String[] vData = lines.get(v).split("\\s");
+				verticesWithWater.add(vData[0]);
+				if (vData.length == 2) {
+					vertexWeightUpdates.put(vData[0], Integer.parseInt(vData[1]));
+				}
+			}
+
+			for (int l = l1; l <= la; l++) {
+				unavailableEdges.add(lines.get(l));
+			}
+
+			Case newCase = new Case(
+				id,
+				verticesWithWater,
+				vertexWeightUpdates,
+				unavailableEdges
+			);
+			cases.add(newCase);
+
+			offset = offset + 2 + e + a + 2;
+		}
 	}
 	
 	/**

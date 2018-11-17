@@ -19,7 +19,7 @@ MYS -1
 COM
 
 miercoles
-3
+4
 6
 BIB -1
 MEM -1
@@ -33,7 +33,7 @@ ENE
 20
 
 jueves
-3
+4
 7
 BIB -1
 MEM -1

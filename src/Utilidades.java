@@ -39,8 +39,14 @@ public class Utilidades {
 				Paths.get(filename),
 				Charset.defaultCharset()
 			);
-			n = Integer.parseInt(lines.get(0));
-			m = Integer.parseInt(lines.get(1));
+			if (typeOfFile.equals("graph")) {
+				n = Integer.parseInt(lines.get(0));
+				m = Integer.parseInt(lines.get(1));
+			}
+			else {
+				n = Integer.parseInt(lines.get(1));
+				m = Integer.parseInt(lines.get(2));
+			}
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -59,11 +65,13 @@ public class Utilidades {
 			  "([A-Z]+[0-9]*\\s[0-9]+\\s[0-9]+,){" + n.toString() + "}" +
 			  "(([A-Z]+[0-9]*)\\s([A-Z]+[0-9]*)\\s[0-9]+\\s[0-9]+(.[0-9]+){0,1},){" +
 			  m.toString() + "}"
-			: "";
+			: "\\S+,[0-9]+,[0-9]+," +
+			  "([A-Z]+[0-9]*(\\s(\\+|-)[0-9])*,){" + n.toString() + "}" +
+			  "([0-9]+,){" + m.toString() + "}";
 
 		Pattern regexPattern = Pattern.compile(regexStr);
 		Matcher match = regexPattern.matcher(fileContent);
 
-		return match.matches();
+		return match.lookingAt();
 	}
 }

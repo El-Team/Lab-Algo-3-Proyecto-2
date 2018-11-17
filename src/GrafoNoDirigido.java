@@ -89,7 +89,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			return false;
 		}
 		catch(ParseException e) {
-			System.out.println("El documento no tiene el formato correcto");
+			System.out.println("El documento que contiene al GRAFO no tiene el formato correcto");
 			return false;
 		}
 
