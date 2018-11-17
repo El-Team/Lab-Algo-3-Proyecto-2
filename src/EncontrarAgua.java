@@ -153,7 +153,7 @@ public class EncontrarAgua {
 
 		GrafoNoDirigido<Integer, Integer> caseGraph =
 			(GrafoNoDirigido<Integer, Integer>)baseGraph.clone(baseGraph);
-		caseGraph.deleteAffectedEdges(_case);
+		caseGraph.deleteUnavailableEdges(_case);
 		caseGraph.updateVertexWeights(_case);
 		caseGraph.updateEdgeWeights(_case);
 		caseGraph.updateWaterAvailability(_case);

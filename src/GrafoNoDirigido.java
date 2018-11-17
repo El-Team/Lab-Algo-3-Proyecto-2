@@ -482,8 +482,10 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	/**
 	 * Elimina las aristas afectadas por las lluvias.
 	 */
-	public void deleteAffectedEdges(Case _case) {
-
+	public void deleteUnavailableEdges(Case _case) {
+		for (String edgeId : _case.getUnavailableEdges()) {
+			this.eliminarArista(this, edgeId);
+		}
 	}
 	
 	/**
