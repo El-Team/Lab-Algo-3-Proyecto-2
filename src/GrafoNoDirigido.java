@@ -121,7 +121,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			Vertice<V> v = new Vertice<V>(
 				vertexData[0],
 				(V)vertexData[1],
-				Double.parseDouble(vertexData[2])
+				Integer.parseInt(vertexData[2])
 			);
 			importedVertices.put(vertexData[0], v);
 		}
@@ -187,7 +187,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean agregarVertice(Grafo<V,L> g, String id, V dato, double p) {
+	public boolean agregarVertice(Grafo<V,L> g, String id, V dato, int p) {
 		GrafoNoDirigido<V,L> castedGraph = (GrafoNoDirigido<V,L>)g;
 		if (castedGraph.estaVertice(this, id)) {
 			return false;
@@ -493,7 +493,13 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	 * modificaciones planteadas en el caso.
 	 */
 	public void updateVertexWeights(Case _case) {
-
+		int newPeso;
+		for (String vertexId : _case.getVertexWeightUpdates().keySet()) {
+			newPeso = 
+				this.obtenerVertice(this, vertexId).getPeso() +
+				_case.getVertexWeightUpdates().get(vertexId);
+			this.obtenerVertice(this, vertexId).setPeso(newPeso);
+		}
 	}
 	
 	/**

@@ -20,7 +20,7 @@ public class Vertice<E> {
 	 * Peso asociado al vertice. Representa el número de pisos que hay que subir
 	 * para encontrar un baño.
 	 */
-	private double peso;
+	private int peso;
 	/**
 	 * Indica si el edificio representado por el vértice tiene agua.
 	 */
@@ -41,7 +41,7 @@ public class Vertice<E> {
 	* 		@param dato representa el dato a almacenar
 	* 		@param p 	representa el peso del {@link Vertice}
 	*/
-	public Vertice(String id, E dato, double p) {
+	public Vertice(String id, E dato, int p) {
 		this.id = id;
 		this.dato = dato;
 		this.peso = p;
@@ -53,8 +53,12 @@ public class Vertice<E> {
 	/** Funcion para obtener el peso del vertice
 	* 		@return 	Peso asociado al vertice
 	*/
-	public double getPeso() {
+	public int getPeso() {
 		return this.peso;
+	}
+
+	public void setPeso(int newPeso) {
+		this.peso = newPeso;
 	}
 
 	/** Funcion para obtener el identificador del vertice

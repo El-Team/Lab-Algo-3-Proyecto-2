@@ -36,7 +36,7 @@ public interface Grafo<V, L> {
 	 * no hay vértice con el identificador id, entonces se crea un nuevo vértice y se agrega al grafo y se
 	 * retorna true, de lo contrario retorna false.
 	 */
-	public boolean agregarVertice(Grafo<V,L> g, String id, V dato, double p);
+	public boolean agregarVertice(Grafo<V,L> g, String id, V dato, int p);
 
 	/**
 	 * Retorna el vértice contenido en el grafo que posee el identificador id. En caso que en el grafo no
