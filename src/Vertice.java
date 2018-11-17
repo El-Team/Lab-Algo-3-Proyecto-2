@@ -22,9 +22,16 @@ public class Vertice<E> {
 	 */
 	private int peso;
 	/**
-	 * Indica si el edificio representado por el vértice tiene agua.
+	 * Indica si el edificio o baño representado por el vértice tiene agua.
 	 */
 	private boolean hasWater;
+
+	/**
+	 * Indica si el vértice representa un baño. En caso de ser falso, dicho
+	 * vértice representa un edificio (más específicamente su PB).
+	 */
+	private boolean isBathroom;
+
 	/**
 	 * Indica la distancia mínima encontrada a partir del vértice de inicio.
 	 */
@@ -46,6 +53,7 @@ public class Vertice<E> {
 		this.dato = dato;
 		this.peso = p;
 		this.hasWater = false;
+		this.isBathroom = false;
 		this.shortestDist = Double.MAX_VALUE;
 		this.prevVertexInShortestPath = null;
 	}
