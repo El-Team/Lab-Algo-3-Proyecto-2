@@ -42,18 +42,22 @@ public class Vertice<E> {
 	 */
 	private String prevVertexInShortestPath;
 
-
-	/** Constructor del TAD Vertice: 
-	* 		@param id 	representa el identificador
-	* 		@param dato representa el dato a almacenar
-	* 		@param p 	representa el peso del {@link Vertice}
-	*/
 	public Vertice(String id, E dato, int p) {
 		this.id = id;
 		this.dato = dato;
 		this.peso = p;
 		this.hasWater = false;
 		this.isBathroom = false;
+		this.shortestDist = Double.MAX_VALUE;
+		this.prevVertexInShortestPath = null;
+	}
+
+	public Vertice(String id, E dato, int p, boolean hasWater, boolean isBathroom) {
+		this.id = id;
+		this.dato = dato;
+		this.peso = p;
+		this.hasWater = hasWater;
+		this.isBathroom = isBathroom;
 		this.shortestDist = Double.MAX_VALUE;
 		this.prevVertexInShortestPath = null;
 	}
@@ -87,6 +91,10 @@ public class Vertice<E> {
 		return this.hasWater;
 	}
 
+	public boolean getIsBathroom() {
+		return this.isBathroom;
+	}
+
 	public Double getShortestDist() {
 		return this.shortestDist;
 	}
@@ -97,6 +105,10 @@ public class Vertice<E> {
 
 	public void setHasWater(boolean newHasWater) {
 		this.hasWater = newHasWater;
+	}
+
+	public void setIsBathroom(boolean newIsBathroom) {
+		this.isBathroom = newIsBathroom;
 	}
 
 	public void getShortestDist(Double newShortestDist) {
