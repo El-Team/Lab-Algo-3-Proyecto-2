@@ -147,7 +147,10 @@ public class EncontrarAgua {
 	}
 	
 	/**
-	 * Modifica los datos del grafo importado acorde con el caso planteado.
+	 * Clona baseGraph, modifica los datos del grafo acorde con el caso
+	 * planteado y lo agrega a caseBasedGraphs. Es de notar que uno de los
+	 * cambios es agregar nuevas aristas que representan el camino de la planta
+	 * baja de cada edificio al baño de dicho edificio.
 	 */
 	private static void createGraphAccordingToCase(Case _case) {
 
@@ -155,7 +158,7 @@ public class EncontrarAgua {
 			(GrafoNoDirigido<Integer, Integer>)baseGraph.clone(baseGraph);
 		caseGraph.deleteUnavailableEdges(_case);
 		caseGraph.updateVertexWeights(_case);
-		caseGraph.updateEdgeWeights(_case);
+		caseGraph.addBathrooms();
 		caseGraph.updateWaterAvailability(_case);
 
 		caseBasedGraphs.put(_case.getId(), caseGraph);
@@ -188,11 +191,12 @@ public class EncontrarAgua {
 	}
 	
 	/**
-	 * Retorna una lista con los caminos más cortos hallados luego de aplicar
+	 * Construye una lista con los caminos más cortos hallados luego de aplicar
 	 * el algoritmo de Bellman-Ford al grafo usando como vértice de partida a
-	 * origin.
+	 * origin y filtra de dicha lista a los caminos cuyo vértice final no sea un
+	 * baño con agua.
 	 */
-	private static ArrayList<ArrayList<String>> getShortestPathsFor(
+	private static ArrayList<ShortestPath> getShortestPathsToBathroomsFor(
 		GrafoNoDirigido<Integer, Integer> graph,
 		String origin
 	) {

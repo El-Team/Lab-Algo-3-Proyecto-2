@@ -506,8 +506,8 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	 * Actualiza las distancias en las aristas para reflejar la distancia exacta
 	 * entre los baños disponibles en los edificios.
 	 */
-	public void updateEdgeWeights(Case _case) {
-
+	public void addBathrooms() {
+		
 	}
 	
 	/**
