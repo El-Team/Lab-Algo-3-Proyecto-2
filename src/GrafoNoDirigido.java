@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 import java.io.IOException;
 import java.lang.Integer;
 import java.util.NoSuchElementException;
+import java.lang.Math;
 
 public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 
@@ -503,11 +504,33 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	}
 	
 	/**
-	 * Actualiza las distancias en las aristas para reflejar la distancia exacta
-	 * entre los baños disponibles en los edificios.
+	 * Agrega un nuevo vértice por cada baño disponible, además de agregar una
+	 * arista que va de la planta baja del edificio al baño.
 	 */
 	public void addBathrooms() {
-		
+		for (String vertexId : this.getVertices().keySet()) {
+
+			Vertice v = this.obtenerVertice(this, vertexId);
+
+			Vertice<Integer> vBathroom = new Vertice(
+				v.getId() + "_" + "bathroom",
+				v.getDato(),
+				0,
+				false,
+				true
+			);
+			this.agregarVertice(this, v);
+
+			Arista<L> stairs = new Arista(
+				v.getId() + "-" + v.getId() + "_bathroom",
+				v.getDato(),
+				(double)25 * Math.abs(v.getPeso()),
+				v,
+				vBathroom,
+				Integer.MAX_VALUE
+			);
+			this.agregarArista(this, stairs);
+		}
 	}
 	
 	/**
@@ -515,6 +538,6 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	 * planteado en el caso.
 	 */
 	public void updateWaterAvailability(Case _case) {
-
+		// recordar incluir el hasWater de los baños
 	}
 }
