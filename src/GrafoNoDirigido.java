@@ -508,18 +508,22 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	 * arista que va de la planta baja del edificio al baño.
 	 */
 	public void addBathrooms() {
-		for (String vertexId : this.getVertices().keySet()) {
+
+		ArrayList<String>initialVertices =
+			new ArrayList<String>(this.getVertices().keySet());
+
+		for (String vertexId : initialVertices) {
 
 			Vertice v = this.obtenerVertice(this, vertexId);
 
-			Vertice<Integer> vBathroom = new Vertice(
+			Vertice<V> vBathroom = new Vertice(
 				v.getId() + "_" + "bathroom",
 				v.getDato(),
 				0,
 				false,
 				true
 			);
-			this.agregarVertice(this, v);
+			this.agregarVertice(this, vBathroom);
 
 			Arista<L> stairs = new Arista(
 				v.getId() + "-" + v.getId() + "_bathroom",
