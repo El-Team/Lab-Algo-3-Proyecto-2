@@ -47,4 +47,8 @@ public class ShortestPath {
 	public void setPeopleSent(int newPeopleSent) {
 		this.peopleSent = newPeopleSent;
 	}
+
+	public boolean isPathToBathroom() {
+		return this.path.get(this.path.size() - 1).getIsBathroom();
+	}
 }
