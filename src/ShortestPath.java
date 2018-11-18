@@ -18,7 +18,7 @@ public class ShortestPath {
 	 */
 	private int peopleSent;
 
-	public ShortestPath(ArrayList<Vertice> path, Double distance, int peopleSent) {
+	public ShortestPath(ArrayList<Vertice> path, Double distance) {
 		this.path = path;
 		this.distance = distance;
 		this.peopleSent = 0;
