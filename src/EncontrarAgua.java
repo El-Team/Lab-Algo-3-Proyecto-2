@@ -205,7 +205,13 @@ public class EncontrarAgua {
 	 * Retorna el camino más corto de la lista suministrada.
 	 */
 	private static ShortestPath getShortestFrom(ArrayList<ShortestPath> shortestPaths) {
-		return shortestPaths.get(0);
+		ShortestPath shortest = shortestPaths.get(0);
+		for (int i = 1; i < shortestPaths.size(); i++) {
+			if (shortestPaths.get(i).getDistance() < shortest.getDistance()) {
+				shortest = shortestPaths.get(i);
+			}
+		}
+		return shortest;
 	}
 
 	/**
@@ -235,6 +241,23 @@ public class EncontrarAgua {
 	 * Distribuye a las personas en vertexId a los baños más cercanos.
 	 */
 	private static void distributePeopleFrom(String vertexId) {
+		for (String caseId : caseBasedGraphs.keySet()) {
+			GrafoNoDirigido<Integer, Integer>
+				caseGraph = caseBasedGraphs.get(caseId);
+			ArrayList<ShortestPath>
+				shortestPaths = getShortestPathsToBathroomsFor(caseGraph, origin);
+			int numOfAvailablePaths = shortestPaths.size();
+			int remainingPeople = numOfPeople;
+
+			while (numOfAvailablePaths > 0 && remainingPeople > 0) {
+				ShortestPath shortestPath = getShortestFrom(shortestPaths);
+				sendPeopleTo(shortestPath); // Actualiza caseGraph
+
+				remainingPeople = remainingPeople - shortestPath.getPeopleSent();
+				shortestPaths = getShortestPathsToBathroomsFor(caseGraph, origin);
+				numOfAvailablePaths = shortestPaths.size();	
+			}
+		}
 		/*
 		Por cada Grafo en caseBasedGraphs:
 			caseId ← la clave del grafo basado en caso que se está evaluando
