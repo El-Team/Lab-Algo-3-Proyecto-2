@@ -538,6 +538,9 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	 * planteado en el caso.
 	 */
 	public void updateWaterAvailability(Case _case) {
-		// recordar incluir el hasWater de los baños
+		for (String vertexId : _case.getVerticesWithWater()) {
+			this.obtenerVertice(this, vertexId).setHasWater(true);
+			this.obtenerVertice(this, vertexId + "_" + "bathroom").setHasWater(true);
+		}
 	}
 }
