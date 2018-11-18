@@ -234,7 +234,17 @@ public class EncontrarAgua {
 	 * Imprime una línea de la forma “N personas a Z Ruta: X - Y - Z (M m)”
 	 */
 	private static void printResultsFor(ShortestPath path) {
+		String pathStr = "";
+		for (Vertice v : path.getPath()) {
+			pathStr += v.getId() + " - ";
+		}
+		pathStr = pathStr.substring(0, pathStr.length() - 3);
 
+		System.out.println(
+			path.getPeopleSent() + " personas a " +
+			path.getPath().get(path.getPath().size() - 1).getId() + "\n" +
+			"	Ruta: " + pathStr + " (" + path.getDistance() + " m)"
+		);
 	}
 	
 	/**
@@ -299,6 +309,6 @@ public class EncontrarAgua {
 		importGraphFrom(args[0]);
 		importCasesFrom(args[1]);
 		createGraphsAccordingToCases();
-		distributePeopleFrom(args[2]);
+		//distributePeopleFrom(args[2]);
 	}
 }
