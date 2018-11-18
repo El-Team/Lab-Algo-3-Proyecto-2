@@ -241,9 +241,9 @@ public class EncontrarAgua {
 		pathStr = pathStr.substring(0, pathStr.length() - 3);
 
 		System.out.println(
-			path.getPeopleSent() + " personas a " +
+			"\t" + path.getPeopleSent() + " personas a " +
 			path.getPath().get(path.getPath().size() - 1).getId() + "\n" +
-			"	Ruta: " + pathStr + " (" + path.getDistance() + " m)"
+			"\t\tRuta: " + pathStr + " (" + path.getDistance() + " m)"
 		);
 	}
 	
@@ -259,14 +259,19 @@ public class EncontrarAgua {
 			int numOfAvailablePaths = shortestPaths.size();
 			int remainingPeople = numOfPeople;
 
+			System.out.println(caseId + "\n");
+
 			while (numOfAvailablePaths > 0 && remainingPeople > 0) {
 				ShortestPath shortestPath = getShortestFrom(shortestPaths);
 				sendPeopleTo(shortestPath); // Actualiza caseGraph
+				printResultsFor(shortestPath);
 
 				remainingPeople = remainingPeople - shortestPath.getPeopleSent();
 				shortestPaths = getShortestPathsToBathroomsFor(caseGraph, origin);
 				numOfAvailablePaths = shortestPaths.size();	
 			}
+
+			System.out.println("\n\t" + remainingPeople + " personas sin asignar");
 		}
 		/*
 		Por cada Grafo en caseBasedGraphs:
