@@ -152,7 +152,8 @@ public class EncontrarAgua {
 	 * cambios es agregar nuevas aristas que representan el camino de la planta
 	 * baja de cada edificio al baño de dicho edificio.
 	 */
-	private static void createGraphAccordingToCase(Case _case) {
+	private static GrafoNoDirigido<Integer, Integer>
+	createGraphAccordingToCase(Case _case) {
 
 		GrafoNoDirigido<Integer, Integer> caseGraph =
 			(GrafoNoDirigido<Integer, Integer>)baseGraph.clone(baseGraph);
@@ -161,7 +162,7 @@ public class EncontrarAgua {
 		caseGraph.addBathrooms();
 		caseGraph.updateWaterAvailability(_case);
 
-		caseBasedGraphs.put(_case.getId(), caseGraph);
+		return caseGraph;
 	}
 	
 	/**
@@ -169,13 +170,10 @@ public class EncontrarAgua {
 	 * caseBasedGraphs.
 	 */
 	private static void createGraphsAccordingToCases() {
-		/*
-		Crear un grafo por cada caso y almacenar en caseBasedGraphs
-		Por cada nuevo grafo en caseBasedGraphs:
-			updateGraphAccordingToCase(Case case)
-		*/
 		for (Case c : cases) {
-			createGraphAccordingToCase(c);
+			GrafoNoDirigido<Integer, Integer> caseGraph = 
+				createGraphAccordingToCase(c);
+			caseBasedGraphs.put(c.getId(), caseGraph);
 		}
 	}
 	
