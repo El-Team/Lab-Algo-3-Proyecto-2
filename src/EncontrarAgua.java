@@ -202,6 +202,36 @@ public class EncontrarAgua {
 	) {
 		return new ArrayList();
 	}
+
+	/**
+	 * Retorna el camino más corto de la lista suministrada.
+	 */
+	private static ShortestPath getShortestFrom(ArrayList<ShortestPath> shortestPaths) {
+		return shortestPaths.get(0);
+	}
+
+	/**
+	 * Obtiene el mayor número de personas que se pueden enviar a través del
+	 * camino suministrado (determinado por el mínimo de las capacidades de
+	 * las aristas), asigna este valor al atributo peopleSent del camino y
+	 * actualiza los datos necesarios, además de notificar al usuario de los
+	 * cambios efectuados.
+	 */
+	private static void sendPeopleTo(ShortestPath shortestPath) {
+		/*
+		Ver cuál es el número de personas puedan pasar por la arista con menor capacidad en el camino (asignar ese valor a shortestPath.peopleSent)
+		====== printResultsFor(shortestPath)  ======
+		Restar shortestPath.peopleSent de la capacidad de cada uno de los lados en shortestPath y en caso de que esta resta de 0 eliminar la arista en el grafo
+		Restar shortestPath.peopleSent de la capacidad del edificio y del baño representados por el penúltimo y último vértice del shortestPath [probablemente no es necesario porque al final si !isBathroom , getShortestPathsToBathroomsFor() no lo va a considerar]
+		*/
+	}
+
+	/**
+	 * Imprime una línea de la forma “N personas a Z Ruta: X - Y - Z (M m)”
+	 */
+	private static void printResultsFor(ShortestPath path) {
+
+	}
 	
 	/**
 	 * Distribuye a las personas en vertexId a los baños más cercanos.
@@ -209,30 +239,19 @@ public class EncontrarAgua {
 	private static void distributePeopleFrom(String vertexId) {
 		/*
 		Por cada Grafo en caseBasedGraphs:
-		====== Imprimir el caseId ======
-		caseId ← la clave del grafo basado en caso que se está evaluando
-		shortestPaths ← getShortestPathsFor(graph, origin)
-		availablePaths ← |shortestPaths|
-		remainingPeople ← toda la gente del principio
-		Mientras availablePaths > 0 y remainingPeople > 0
-		Escoger el camino más corto y enviar tantas personas como número de personas puedan pasar por la arista con menor capacidad en el camino (modificar el atributo peopleSent de este canino)
-		====== printResultsFor(<el ShortestPath en cuestión>)  ======
-		updateCaseGraph()
-		Restar peopleSent de la capacidad de cada uno de los lados del ShortestPath en cuestión y en caso de que esta resta de 0 eliminar la arista en el grafo
-		Restar peopleSent de la capacidad del edificio representado por el último vértice del ShortestPath en cuestión
-		shortestPaths ← getShortestPathsFor(graph, origin)  ─basándose en el grafo actualizado─
-		availablePaths ← |shortestPaths|
-		Restar el número de personas asignadas de remainingPeople
-		====== Imprimir remainingPeople ======
-		printResultsFor(ShortestPath path) - Imprime una línea de la forma “N personas a Z Ruta: X - Y - Z (M m)”
+			caseId ← la clave del grafo basado en caso que se está evaluando
+			shortestPaths ← getShortestPathsToBathroomsFor(graph, origin)
+			numOfAvailablePaths ← |shortestPaths|
+			remainingPeople ← toda la gente del principio
+			====== Imprimir el caseId ======
+			Mientras numOfAvailablePaths > 0 y remainingPeople > 0
+				shortestPath ← getShortestFrom(shortestPaths)
+				sendPeopleTo(shortestPath)
+				remainingPeople ← remainingPeople - shortestPath.peopleSent
+				shortestPaths ← getShortestPathsToBathroomsFor(graph, origin)  ─basándose en el grafo actualizado─
+				numOfAvailablePaths ← |shortestPaths|
+			====== Imprimir remainingPeople ======
 		*/
-	}
-
-	/**
-	 * Imprime una línea de la forma “N personas a Z Ruta: X - Y - Z (M m)”
-	 */
-	public static void printResultsFor(ShortestPath path) {
-
 	}
 
 	/**
