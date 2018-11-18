@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.charset.Charset;
 import java.io.IOException;
+import java.util.Stack;
 
 public class EncontrarAgua {
 
@@ -183,9 +184,37 @@ public class EncontrarAgua {
 	 */
 	private static void applyBellmanFordTo(
 		GrafoNoDirigido<Integer, Integer> graph,
-		String origin
+		String originV
 	) {
 
+	}
+
+	/**
+	 * Construye un ShortestPath que tiene como vértice de inicio a origin y
+	 * como vértice final a v.
+	 */
+	private static ShortestPath getShortestPathTo(
+		Vertice v,
+		GrafoNoDirigido<Integer, Integer> graph
+	) {
+
+		Vertice currentVertex = v;
+		Stack vertexIdsInReverseOrder = new Stack();
+
+		// Construir atributo path
+		ArrayList<Vertice> path = new ArrayList();
+		while (currentVertex.getPrevVertexInShortestPath() != null) {
+			vertexIdsInReverseOrder.push(
+				currentVertex.getPrevVertexInShortestPath()
+			);
+		}
+		while (!vertexIdsInReverseOrder.empty()) {
+			path.add(
+				graph.obtenerVertice(graph, (String)vertexIdsInReverseOrder.pop())
+			);
+		}
+
+		return new ShortestPath(path, path.get(path.size()-1).getShortestDist());
 	}
 	
 	/**
@@ -196,9 +225,21 @@ public class EncontrarAgua {
 	 */
 	private static ArrayList<ShortestPath> getShortestPathsToBathroomsFor(
 		GrafoNoDirigido<Integer, Integer> graph,
-		String origin
+		String originV
 	) {
-		return new ArrayList();
+
+		ArrayList<ShortestPath> pathsToBathrooms = new ArrayList();
+		applyBellmanFordTo(graph, originV);
+		
+		ShortestPath currentPath;
+		for (Vertice v : graph.vertices(graph)) {
+			currentPath = getShortestPathTo(v, graph);
+			if (currentPath.isPathToBathroom()) {
+				pathsToBathrooms.add(currentPath);
+			}
+		}
+
+		return pathsToBathrooms;
 	}
 
 	/**
@@ -273,21 +314,6 @@ public class EncontrarAgua {
 
 			System.out.println("\n\t" + remainingPeople + " personas sin asignar");
 		}
-		/*
-		Por cada Grafo en caseBasedGraphs:
-			caseId ← la clave del grafo basado en caso que se está evaluando
-			shortestPaths ← getShortestPathsToBathroomsFor(graph, origin)
-			numOfAvailablePaths ← |shortestPaths|
-			remainingPeople ← toda la gente del principio
-			====== Imprimir el caseId ======
-			Mientras numOfAvailablePaths > 0 y remainingPeople > 0
-				shortestPath ← getShortestFrom(shortestPaths)
-				sendPeopleTo(shortestPath)
-				remainingPeople ← remainingPeople - shortestPath.peopleSent
-				shortestPaths ← getShortestPathsToBathroomsFor(graph, origin)  ─basándose en el grafo actualizado─
-				numOfAvailablePaths ← |shortestPaths|
-			====== Imprimir remainingPeople ======
-		*/
 	}
 
 	/**
