@@ -182,10 +182,10 @@ public class EncontrarAgua {
 	 */
 	private static void applyBellmanFordTo(
 		GrafoNoDirigido<Integer, Integer> graph,
-		String originV
+		String origin
 	) {
-		graph.obtenerVertice(graph, originV).setShortestDist((double)0);
-		graph.obtenerVertice(graph, originV).setPrevVertexInShortestPath("None");
+		graph.obtenerVertice(graph, origin).setShortestDist((double)0);
+		graph.obtenerVertice(graph, origin).setPrevVertexInShortestPath("None");
 
 		for (int i = 0; i < graph.getVertexCount(); i++) {
 			for (Lado l : graph.lados(graph)) {
@@ -290,17 +290,19 @@ public class EncontrarAgua {
 	 */
 	private static ArrayList<ShortestPath> getShortestPathsToBathroomsFor(
 		GrafoNoDirigido<Integer, Integer> graph,
-		String originV
+		String origin
 	) {
 
 		ArrayList<ShortestPath> pathsToBathrooms = new ArrayList();
-		applyBellmanFordTo(graph, originV);
+		applyBellmanFordTo(graph, origin);
 		
 		ShortestPath currentPath;
 		for (Vertice v : graph.vertices(graph)) {
-			currentPath = getShortestPathTo(v, graph);
-			if (currentPath.isPathToBathroom()) {
-				pathsToBathrooms.add(currentPath);
+			if (!v.getId().equals(origin)) {
+				currentPath = getShortestPathTo(v, graph);
+				if (currentPath.isPathToBathroom()) {
+					pathsToBathrooms.add(currentPath);
+				}
 			}
 		}
 
