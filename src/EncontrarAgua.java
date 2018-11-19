@@ -309,22 +309,6 @@ public class EncontrarAgua {
 	}
 
 	/**
-	 * Obtiene el mayor número de personas que se pueden enviar a través del
-	 * camino suministrado (determinado por el mínimo de las capacidades de
-	 * las aristas), asigna este valor al atributo peopleSent del camino y
-	 * actualiza los datos necesarios, además de notificar al usuario de los
-	 * cambios efectuados.
-	 */
-	private static void sendPeopleTo(ShortestPath shortestPath) {
-		/*
-		Ver cuál es el número de personas puedan pasar por la arista con menor capacidad en el camino (asignar ese valor a shortestPath.peopleSent)
-		====== printResultsFor(shortestPath)  ======
-		Restar shortestPath.peopleSent de la capacidad de cada uno de los lados en shortestPath y en caso de que esta resta de 0 eliminar la arista en el grafo
-		Restar shortestPath.peopleSent de la capacidad del edificio y del baño representados por el penúltimo y último vértice del shortestPath [probablemente no es necesario porque al final si !isBathroom , getShortestPathsToBathroomsFor() no lo va a considerar]
-		*/
-	}
-
-	/**
 	 * Imprime una línea de la forma “N personas a Z Ruta: X - Y - Z (M m)”
 	 */
 	private static void printResultsFor(ShortestPath path) {
@@ -339,6 +323,23 @@ public class EncontrarAgua {
 			path.getPath().get(path.getPath().size() - 1).getId() + "\n" +
 			"\t\tRuta: " + pathStr + " (" + path.getDistance() + " m)"
 		);
+	}
+
+	/**
+	 * Obtiene el mayor número de personas que se pueden enviar a través del
+	 * camino suministrado (determinado por el mínimo de las capacidades de
+	 * las aristas), asigna este valor al atributo peopleSent del camino y
+	 * actualiza los datos necesarios, además de notificar al usuario de los
+	 * cambios efectuados.
+	 */
+	private static void sendPeopleTo(ShortestPath shortestPath) {
+		int peopleSent = 0;
+		/*
+		Ver cuál es el número de personas puedan pasar por la arista con menor capacidad en el camino (asignar ese valor a shortestPath.peopleSent)
+		====== printResultsFor(shortestPath)  ======
+		Restar shortestPath.peopleSent de la capacidad de cada uno de los lados en shortestPath y en caso de que esta resta de 0 eliminar la arista en el grafo
+		Restar shortestPath.peopleSent de la capacidad del edificio y del baño representados por el penúltimo y último vértice del shortestPath [probablemente no es necesario porque al final si !isBathroom , getShortestPathsToBathroomsFor() no lo va a considerar]
+		*/
 	}
 	
 	/**
