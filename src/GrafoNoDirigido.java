@@ -138,14 +138,25 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			Vertice<V> vf = this.obtenerVertice(this, edgeData[1]);
 			Integer lineId = i - 2 - this.getVertexCount();
 
+			// El id de la arista no se pasa directamente por tratarse de un
+			// multigrafo
+			String edgeId = edgeData[0] + "-" + edgeData[1];
+			int suffix = 1;
+			while (this.estaLado(edgeId)) {
+				edgeId = suffix == 1
+					? edgeId + suffix 
+					: edgeId.substring(0, edgeId.length() - 1) + suffix;
+			}
+
 			Arista<L> e = new Arista<L>(
-				edgeData[0] + "-" + edgeData[1],
+				edgeId,
 				(L)edgeData[2],
 				Double.parseDouble(edgeData[3]),
 				vi,
 				vf,
 				lineId
 			);
+
 			importedEdges.put(edgeData[0] + "-" + edgeData[1], e);
 		}
 		this.setEdges(importedEdges);
@@ -242,6 +253,18 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 				)
 				
 			) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Verifica la existencia de una arista en base a un id suministrado.
+	 */
+	public boolean estaLado(String edgeId) {
+		for (String eId : this.getEdges().keySet()) {
+			if (eId.equals(edgeId)) {
 				return true;
 			}
 		}
