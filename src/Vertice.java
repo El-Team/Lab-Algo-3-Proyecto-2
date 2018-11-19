@@ -115,7 +115,7 @@ public class Vertice<E> {
 		this.shortestDist = newShortestDist;
 	}
 
-	public void getPrevVertexInShortestPath(String newPrevVertexInShortestPath) {
+	public void setPrevVertexInShortestPath(String newPrevVertexInShortestPath) {
 		this.prevVertexInShortestPath = newPrevVertexInShortestPath;
 	}
 
