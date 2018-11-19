@@ -232,8 +232,15 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 		for (String edgeId : castedGraph.getEdges().keySet()) {
 			Arista<L> castedEdge = (Arista<L>)castedGraph.getEdges().get(edgeId);
 			if (
-				castedEdge.getExtremo1().getId().equals(u) &&
-				castedEdge.getExtremo2().getId().equals(v)
+				(
+					castedEdge.getExtremo1().getId().equals(u) &&
+					castedEdge.getExtremo2().getId().equals(v)
+				) ||
+				(
+					castedEdge.getExtremo1().getId().equals(v) &&
+					castedEdge.getExtremo2().getId().equals(u)
+				)
+				
 			) {
 				return true;
 			}
