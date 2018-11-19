@@ -267,7 +267,19 @@ public class EncontrarAgua {
 			);
 		}
 
-		return new ShortestPath(path, path.get(path.size()-1).getShortestDist());
+		// Construir atributo pathEdges
+		ArrayList<String> pathEdges = new ArrayList();
+		for (int i = 0; i < path.size() - 1; i++) {
+			String v1 = path.get(i).getId();
+			String v2 = path.get(i+1).getId();
+			pathEdges.add(graph.getShortestAristaFor(v1, v2).getId());
+		}
+
+		return new ShortestPath(
+			path,
+			pathEdges,
+			path.get(path.size() - 1).getShortestDist()
+		);
 	}
 	
 	/**
@@ -332,14 +344,36 @@ public class EncontrarAgua {
 	 * actualiza los datos necesarios, además de notificar al usuario de los
 	 * cambios efectuados.
 	 */
-	private static void sendPeopleTo(ShortestPath shortestPath) {
-		int peopleSent = 0;
-		/*
-		Ver cuál es el número de personas puedan pasar por la arista con menor capacidad en el camino (asignar ese valor a shortestPath.peopleSent)
-		====== printResultsFor(shortestPath)  ======
-		Restar shortestPath.peopleSent de la capacidad de cada uno de los lados en shortestPath y en caso de que esta resta de 0 eliminar la arista en el grafo
-		Restar shortestPath.peopleSent de la capacidad del edificio y del baño representados por el penúltimo y último vértice del shortestPath [probablemente no es necesario porque al final si !isBathroom , getShortestPathsToBathroomsFor() no lo va a considerar]
-		*/
+	private static void sendPeopleTo(
+		ShortestPath shortestPath,
+		GrafoNoDirigido<Integer, Integer> graph
+	) {
+		// Obtener el número de gente que se puede enviar
+		int peopleSent = Integer.MAX_VALUE;
+		for (String edgeId : shortestPath.getPathEdges()) {
+			if (
+				(int)graph.obtenerArista(graph, edgeId).getDato() <
+				peopleSent
+			) {
+				peopleSent = (int)graph.obtenerArista(graph, edgeId).getDato();
+			}
+		}
+
+		// Mandar a la gente
+		shortestPath.setPeopleSent(peopleSent);
+		printResultsFor(shortestPath);
+
+		// Actualizar grafo
+		for (String edgeId : shortestPath.getPathEdges()) {
+			if ((int)graph.obtenerArista(graph, edgeId).getDato()-peopleSent > 0) {
+				graph.obtenerArista(graph, edgeId).setDato(
+					(int)graph.obtenerArista(graph, edgeId).getDato()-peopleSent
+				);
+			}
+			else {
+				graph.eliminarArista(graph, edgeId);
+			}
+		}
 	}
 	
 	/**
@@ -358,7 +392,7 @@ public class EncontrarAgua {
 
 			while (numOfAvailablePaths > 0 && remainingPeople > 0) {
 				ShortestPath shortestPath = getShortestFrom(shortestPaths);
-				sendPeopleTo(shortestPath); // Actualiza caseGraph
+				sendPeopleTo(shortestPath, caseGraph); // Actualiza caseGraph
 				printResultsFor(shortestPath);
 
 				remainingPeople = remainingPeople - shortestPath.getPeopleSent();
@@ -394,6 +428,6 @@ public class EncontrarAgua {
 		importGraphFrom(args[0]);
 		importCasesFrom(args[1]);
 		createGraphsAccordingToCases();
-		//distributePeopleFrom(args[2]);
+		distributePeopleFrom(args[2]);
 	}
 }
