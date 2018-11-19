@@ -51,6 +51,14 @@ public class Arista<E> extends Lado<E> {
 		return this.v;
 	}
 
+	public E getDato() {
+		return this.dato;
+	}
+
+	public void setDato(E newDato) {
+		this.dato = newDato;
+	}
+
 	public Integer getLineId() {
 		return this.lineId;
 	}
