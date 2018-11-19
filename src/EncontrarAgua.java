@@ -35,10 +35,6 @@ public class EncontrarAgua {
 	 */
 	private static ArrayList<Case> cases = new ArrayList();
 	/**
-	 * Id del vértice de partida.
-	 */
-	private static String origin;
-	/**
 	 * Cantidad de personas a las que se les debe asignar baño.
 	 */
 	private static int numOfPeople;
@@ -188,8 +184,9 @@ public class EncontrarAgua {
 		GrafoNoDirigido<Integer, Integer> graph,
 		String originV
 	) {
+		System.out.println(originV);
 		graph.obtenerVertice(graph, originV).setShortestDist((double)0);
-
+		graph.obtenerVertice(graph, originV).setPrevVertexInShortestPath("None");
 
 		for (int i = 0; i < graph.getVertexCount(); i++) {
 			for (Lado l : graph.lados(graph)) {
@@ -202,7 +199,7 @@ public class EncontrarAgua {
 					e.getExtremo2().setShortestDist(
 						e.getExtremo1().getShortestDist() + e.getPeso()
 					);
-					e.getExtremo2().getPrevVertexInShortestPath(
+					e.getExtremo2().setPrevVertexInShortestPath(
 						e.getExtremo1().getId()
 					);
 				}
@@ -214,7 +211,7 @@ public class EncontrarAgua {
 					e.getExtremo1().setShortestDist(
 						e.getExtremo2().getShortestDist() + e.getPeso()
 					);
-					e.getExtremo1().getPrevVertexInShortestPath(
+					e.getExtremo1().setPrevVertexInShortestPath(
 						e.getExtremo2().getId()
 					);
 				}
@@ -256,8 +253,12 @@ public class EncontrarAgua {
 
 		// Construir atributo path
 		ArrayList<Vertice> path = new ArrayList();
-		while (currentVertex.getPrevVertexInShortestPath() != null) {
+		while (!currentVertex.getPrevVertexInShortestPath().equals("None")) {
 			vertexIdsInReverseOrder.push(
+				currentVertex.getPrevVertexInShortestPath()
+			);
+			currentVertex = graph.obtenerVertice(
+				graph,
 				currentVertex.getPrevVertexInShortestPath()
 			);
 		}
@@ -379,7 +380,7 @@ public class EncontrarAgua {
 	/**
 	 * Distribuye a las personas en vertexId a los baños más cercanos.
 	 */
-	private static void distributePeopleFrom(String vertexId) {
+	private static void distributePeopleFrom(String origin) {
 		for (String caseId : caseBasedGraphs.keySet()) {
 			GrafoNoDirigido<Integer, Integer>
 				caseGraph = caseBasedGraphs.get(caseId);
