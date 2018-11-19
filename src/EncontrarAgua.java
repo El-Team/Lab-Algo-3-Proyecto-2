@@ -355,10 +355,14 @@ public class EncontrarAgua {
 		int peopleSent = Integer.MAX_VALUE;
 		for (String edgeId : shortestPath.getPathEdges()) {
 			if (
-				(int)graph.obtenerArista(graph, edgeId).getDato() <
+				Integer.parseInt(
+					(String)graph.obtenerArista(graph, edgeId).getDato()
+				) <
 				peopleSent
 			) {
-				peopleSent = (int)graph.obtenerArista(graph, edgeId).getDato();
+				peopleSent = Integer.parseInt(
+					(String)graph.obtenerArista(graph, edgeId).getDato()
+				);
 			}
 		}
 
@@ -368,9 +372,15 @@ public class EncontrarAgua {
 
 		// Actualizar grafo
 		for (String edgeId : shortestPath.getPathEdges()) {
-			if ((int)graph.obtenerArista(graph, edgeId).getDato()-peopleSent > 0) {
+			if (
+				Integer.parseInt(
+					(String)graph.obtenerArista(graph, edgeId).getDato()
+				) - peopleSent > 0
+			) {
 				graph.obtenerArista(graph, edgeId).setDato(
-					(int)graph.obtenerArista(graph, edgeId).getDato()-peopleSent
+					Integer.parseInt(
+						(String)graph.obtenerArista(graph, edgeId).getDato()
+					) - peopleSent
 				);
 			}
 			else {
@@ -391,7 +401,7 @@ public class EncontrarAgua {
 			int numOfAvailablePaths = shortestPaths.size();
 			int remainingPeople = numOfPeople;
 
-			System.out.println(caseId + "\n");
+			System.out.println(caseId);
 
 			while (numOfAvailablePaths > 0 && remainingPeople > 0) {
 				ShortestPath shortestPath = getShortestFrom(shortestPaths);
