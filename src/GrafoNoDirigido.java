@@ -547,7 +547,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			Vertice v = this.obtenerVertice(this, vertexId);
 
 			Vertice<V> vBathroom = new Vertice(
-				v.getId() + "_" + "bathroom",
+				v.getId() + "_bathroom",
 				v.getDato(),
 				0,
 				false,
@@ -574,7 +574,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 	public void updateWaterAvailability(Case _case) {
 		for (String vertexId : _case.getVerticesWithWater()) {
 			this.obtenerVertice(this, vertexId).setHasWater(true);
-			this.obtenerVertice(this, vertexId + "_" + "bathroom").setHasWater(true);
+			this.obtenerVertice(this, vertexId + "_bathroom").setHasWater(true);
 		}
 	}
 
@@ -593,8 +593,8 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 					e.getExtremo2().getId().equals(v2)
 				) ||
 				(
-					e.getExtremo2().getId().equals(v2) &&
-					e.getExtremo1().getId().equals(v1)
+					e.getExtremo1().getId().equals(v2) &&
+					e.getExtremo2().getId().equals(v1)
 				)
 			) {
 				if (shortestArista == null) {

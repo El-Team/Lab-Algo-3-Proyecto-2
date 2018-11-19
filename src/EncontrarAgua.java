@@ -184,7 +184,6 @@ public class EncontrarAgua {
 		GrafoNoDirigido<Integer, Integer> graph,
 		String originV
 	) {
-		System.out.println(originV);
 		graph.obtenerVertice(graph, originV).setShortestDist((double)0);
 		graph.obtenerVertice(graph, originV).setPrevVertexInShortestPath("None");
 
