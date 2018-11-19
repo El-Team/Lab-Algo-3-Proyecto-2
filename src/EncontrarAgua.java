@@ -369,7 +369,6 @@ public class EncontrarAgua {
 
 		// Mandar a la gente
 		shortestPath.setPeopleSent(peopleSent);
-		printResultsFor(shortestPath);
 
 		// Actualizar grafo
 		for (String edgeId : shortestPath.getPathEdges()) {
