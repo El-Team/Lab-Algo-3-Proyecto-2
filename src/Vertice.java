@@ -111,7 +111,7 @@ public class Vertice<E> {
 		this.isBathroom = newIsBathroom;
 	}
 
-	public void getShortestDist(Double newShortestDist) {
+	public void setShortestDist(Double newShortestDist) {
 		this.shortestDist = newShortestDist;
 	}
 
