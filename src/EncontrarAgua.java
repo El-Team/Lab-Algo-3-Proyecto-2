@@ -180,13 +180,66 @@ public class EncontrarAgua {
 	
 	/**
 	 * Aplica el algoritmo de Bellman-Ford al grafo usando como vértice de
-	 * partida a origin.
+	 * partida a origin. Nótese que como el algoritmo original aplica a grafos
+	 * dirigidos, por cada arista evaluada se toman en cuenta las dos posibles
+	 * direcciones del recorrido.
 	 */
 	private static void applyBellmanFordTo(
 		GrafoNoDirigido<Integer, Integer> graph,
 		String originV
 	) {
+		graph.obtenerVertice(graph, originV).setShortestDist((double)0);
 
+
+		for (int i = 0; i < graph.getVertexCount(); i++) {
+			for (Lado l : graph.lados(graph)) {
+				Arista<Integer> e = (Arista<Integer>)l;
+				// En dirección Extremo 1 → Extremo 2
+				if (
+					e.getExtremo1().getShortestDist() + e.getPeso() <
+					e.getExtremo2().getShortestDist()
+				) {
+					e.getExtremo2().setShortestDist(
+						e.getExtremo1().getShortestDist() + e.getPeso()
+					);
+					e.getExtremo2().getPrevVertexInShortestPath(
+						e.getExtremo1().getId()
+					);
+				}
+				// En dirección Extremo 2 → Extremo 1
+				if (
+					e.getExtremo2().getShortestDist() + e.getPeso() <
+					e.getExtremo1().getShortestDist()
+				) {
+					e.getExtremo1().setShortestDist(
+						e.getExtremo2().getShortestDist() + e.getPeso()
+					);
+					e.getExtremo1().getPrevVertexInShortestPath(
+						e.getExtremo2().getId()
+					);
+				}
+			}	
+		}
+
+
+		for (Lado l : graph.lados(graph)) {
+			Arista<Integer> e = (Arista<Integer>)l;
+			if (
+				(
+					e.getExtremo1().getShortestDist() + e.getPeso() <
+					e.getExtremo2().getShortestDist()
+				) ||
+				(
+					e.getExtremo2().getShortestDist() + e.getPeso() <
+					e.getExtremo1().getShortestDist()
+				)
+			) {
+				System.out.println(
+					"El grafo contiene un circuito de peso negativo"
+				);
+				break;
+			}
+		}
 	}
 
 	/**
