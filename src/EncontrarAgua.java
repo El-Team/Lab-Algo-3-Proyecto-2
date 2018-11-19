@@ -328,14 +328,15 @@ public class EncontrarAgua {
 	 */
 	private static void printResultsFor(ShortestPath path) {
 		String pathStr = "";
-		for (Vertice v : path.getPath()) {
-			pathStr += v.getId() + " - ";
+		ArrayList<Vertice> pathVertices = path.getPath();
+		for (int i = 0; i < pathVertices.size() - 1; i++) {
+			pathStr += pathVertices.get(i).getId() + " - ";
 		}
 		pathStr = pathStr.substring(0, pathStr.length() - 3);
 
 		System.out.println(
 			"\t" + path.getPeopleSent() + " personas a " +
-			path.getPath().get(path.getPath().size() - 1).getId() + "\n" +
+			path.getPath().get(path.getPath().size() - 2).getId() + "\n" +
 			"\t\tRuta: " + pathStr + " (" + path.getDistance() + " m)"
 		);
 	}
