@@ -126,6 +126,10 @@ public class Vertice<E> {
 		return "Vertice \"" + this.id + "\":\n" +
 			"	Tipo de dato:		" + this.dato.getClass().getSimpleName() + "\n" +
 			"	Dato:		" + this.dato + "\n" +
-			"	Peso:		" + this.peso + "\n";
+			"	Peso:		" + this.peso + "\n" +
+			"   Tiene Agua: " + this.hasWater + "\n" +
+			"   Es un baño: " + this.isBathroom + "\n" +
+			"   Distancia: " + this.shortestDist + "\n" +
+			"   Previo: " + this.prevVertexInShortestPath + "\n";
 	}
 }
