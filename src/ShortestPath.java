@@ -68,4 +68,8 @@ public class ShortestPath {
 	public boolean isPathToBathroom() {
 		return this.path.get(this.path.size() - 1).getIsBathroom();
 	}
+
+	public boolean endsInAVertexWithWater() {
+		return this.path.get(this.path.size() - 1).getHasWater();
+	}
 }

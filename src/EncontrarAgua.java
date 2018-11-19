@@ -301,7 +301,10 @@ public class EncontrarAgua {
 		for (Vertice v : graph.vertices(graph)) {
 			if (!v.getId().equals(origin)) {
 				currentPath = getShortestPathTo(v, graph);
-				if (currentPath.isPathToBathroom()) {
+				if (
+					currentPath.isPathToBathroom() &&
+					currentPath.endsInAVertexWithWater()
+				) {
 					pathsToBathrooms.add(currentPath);
 				}
 			}
@@ -350,7 +353,8 @@ public class EncontrarAgua {
 	 */
 	private static void sendPeopleTo(
 		ShortestPath shortestPath,
-		GrafoNoDirigido<Integer, Integer> graph
+		GrafoNoDirigido<Integer, Integer> graph,
+		int totalNumOfPeople
 	) {
 		// Obtener el número de gente que se puede enviar
 		int peopleSent = Integer.MAX_VALUE;
@@ -368,6 +372,7 @@ public class EncontrarAgua {
 		}
 
 		// Mandar a la gente
+		peopleSent = peopleSent>totalNumOfPeople ? totalNumOfPeople : peopleSent;
 		shortestPath.setPeopleSent(peopleSent);
 
 		// Actualizar grafo
@@ -401,11 +406,11 @@ public class EncontrarAgua {
 			int numOfAvailablePaths = shortestPaths.size();
 			int remainingPeople = numOfPeople;
 
-			System.out.println(caseId);
+			System.out.println("\n" + caseId);
 
 			while (numOfAvailablePaths > 0 && remainingPeople > 0) {
 				ShortestPath shortestPath = getShortestFrom(shortestPaths);
-				sendPeopleTo(shortestPath, caseGraph); // Actualiza caseGraph
+				sendPeopleTo(shortestPath, caseGraph, numOfPeople); // Actualiza caseGraph
 				printResultsFor(shortestPath);
 
 				remainingPeople = remainingPeople - shortestPath.getPeopleSent();
