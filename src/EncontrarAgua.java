@@ -266,6 +266,7 @@ public class EncontrarAgua {
 				graph.obtenerVertice(graph, (String)vertexIdsInReverseOrder.pop())
 			);
 		}
+		path.add(v);
 
 		// Construir atributo pathEdges
 		ArrayList<String> pathEdges = new ArrayList();
