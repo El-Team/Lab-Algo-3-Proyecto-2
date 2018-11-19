@@ -547,4 +547,39 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 			this.obtenerVertice(this, vertexId + "_" + "bathroom").setHasWater(true);
 		}
 	}
+
+	/**
+	 * Retorna la arista de peso mínimo que une a los vértice con id v1 y v2.
+	 */
+	public Arista<L> getShortestAristaFor(String v1, String v2) throws NoSuchElementException {
+
+		Arista<L> shortestArista = null;
+
+		for (Lado l : this.lados(this)) {
+			Arista<L> e = (Arista<L>)l;
+			if (
+				(
+					e.getExtremo1().getId().equals(v1) &&
+					e.getExtremo2().getId().equals(v2)
+				) ||
+				(
+					e.getExtremo2().getId().equals(v2) &&
+					e.getExtremo1().getId().equals(v1)
+				)
+			) {
+				if (shortestArista == null) {
+					shortestArista = e;
+				}
+				else if (e.getPeso() < shortestArista.getPeso()) {
+					shortestArista = e;
+				}
+			}
+		}
+
+		if (shortestArista == null) {
+			throw new NoSuchElementException();
+		}
+
+		return shortestArista;
+	}
 }
