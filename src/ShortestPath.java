@@ -10,6 +10,10 @@ public class ShortestPath {
 	 */
 	private ArrayList<Vertice> path;
 	/**
+	 * Lista de los ids de las Aristas que hacen este camino.
+	 */
+	private ArrayList<String> pathEdges;
+	/**
 	 * Distancia total recorrida en este camino.
 	 */
 	private Double distance;
@@ -18,14 +22,23 @@ public class ShortestPath {
 	 */
 	private int peopleSent;
 
-	public ShortestPath(ArrayList<Vertice> path, Double distance) {
+	public ShortestPath(
+		ArrayList<Vertice> path,
+		ArrayList<String> pathEdges,
+		Double distance
+	) {
 		this.path = path;
+		this.pathEdges = pathEdges;
 		this.distance = distance;
 		this.peopleSent = 0;
 	}
 
 	public ArrayList<Vertice> getPath() {
 		return this.path;
+	}
+
+	public ArrayList<String> getPathEdges() {
+		return this.pathEdges;
 	}
 
 	public Double getDistance() {
@@ -38,6 +51,10 @@ public class ShortestPath {
 
 	public void setPath(ArrayList<Vertice> newPath) {
 		this.path = newPath;
+	}
+
+	public void setPathEdges(ArrayList<String> newPathEdges) {
+		this.pathEdges = newPathEdges;
 	}
 
 	public void setDistance(Double newDistance) {
