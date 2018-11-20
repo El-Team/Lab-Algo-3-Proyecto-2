@@ -103,6 +103,10 @@ public class Vertice<E> {
 		return this.prevVertexInShortestPath;
 	}
 
+	public void setDato(E newDato) {
+		this.dato = newDato;
+	}
+
 	public void setHasWater(boolean newHasWater) {
 		this.hasWater = newHasWater;
 	}
