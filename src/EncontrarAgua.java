@@ -363,19 +363,22 @@ public class EncontrarAgua {
 	) {
 		// Actualizar aristas
 		for (String edgeId : shortestPath.getPathEdges()) {
+
 			int edgeCapacity;
 			try {
 				edgeCapacity = Integer.parseInt(
-					(String)caseGraph.obtenerArista(caseGraph, edgeId).getDato());
+					(String)caseGraph.obtenerArista(caseGraph, edgeId).getDato()
+				);
 			}
 			catch (ClassCastException e) {
-				edgeCapacity = (int)caseGraph.obtenerArista(caseGraph, edgeId).getDato();
+				edgeCapacity =
+					(int)caseGraph.obtenerArista(caseGraph, edgeId).getDato();
 			}
-			if (
-				edgeCapacity - peopleSent > 0
-			) {
+
+			if (edgeCapacity - peopleSent > 0) {
 				caseGraph.obtenerArista(caseGraph, edgeId).setDato(
-					edgeCapacity - peopleSent);
+					edgeCapacity - peopleSent
+				);
 			}
 			else {
 				caseGraph.eliminarArista(caseGraph, edgeId);
