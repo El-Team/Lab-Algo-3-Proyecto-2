@@ -117,6 +117,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 
 		LinkedHashMap<String, Vertice<V>> importedVertices =
 			new LinkedHashMap<String, Vertice<V>>();
+
 		for (int i = 2; i < 2 + this.getVertexCount(); i++) {
 			String[] vertexData = lines.get(i).split("\\s");
 			Vertice<V> v = new Vertice<V>(
@@ -157,7 +158,7 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 				lineId
 			);
 
-			importedEdges.put(edgeData[0] + "-" + edgeData[1], e);
+			importedEdges.put(edgeId, e);
 		}
 		this.setEdges(importedEdges);
 
