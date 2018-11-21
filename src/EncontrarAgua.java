@@ -456,11 +456,15 @@ public class EncontrarAgua {
 
 			while (numOfAvailablePaths > 0 && remainingPeople > 0) {
 				ShortestPath shortestPath = getShortestFrom(shortestPaths);
-				sendPeopleTo(shortestPath, caseGraph, numOfPeople); // Actualiza caseGraph
+				sendPeopleTo(shortestPath, caseGraph, remainingPeople); // Actualiza caseGraph
 				printResultsFor(shortestPath);
 
-				remainingPeople = remainingPeople - shortestPath.getPeopleSent();
-				shortestPaths = getShortestPathsToBathroomsFor(caseGraph, origin);
+				remainingPeople =
+					remainingPeople - shortestPath.getPeopleSent() >= 0 ?
+					remainingPeople - shortestPath.getPeopleSent() : 0;
+				if (remainingPeople > 0) {
+					shortestPaths = getShortestPathsToBathroomsFor(caseGraph, origin);
+				}
 				numOfAvailablePaths = shortestPaths.size();
 			}
 
