@@ -304,7 +304,8 @@ public class EncontrarAgua {
 		
 		ShortestPath currentPath;
 		for (Vertice v : graph.vertices(graph)) {
-			if (!v.getId().equals(origin)) {
+			if (!v.getId().equals(origin) && 
+				v.getShortestDist() < Double.MAX_VALUE) {
 				currentPath = getShortestPathTo(v, graph);
 				if (
 					currentPath.isPathToBathroom() &&
