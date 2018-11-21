@@ -15,8 +15,6 @@ import java.nio.charset.Charset;
 import java.io.IOException;
 import java.util.Stack;
 
-import java.util.NoSuchElementException;
-
 public class EncontrarAgua {
 
 	/**
@@ -254,9 +252,6 @@ public class EncontrarAgua {
 
 		// Construir atributo path
 		ArrayList<Vertice> path = new ArrayList();
-
-		//System.out.println(currentVertex.toString());
-
 		while (!currentVertex.getPrevVertexInShortestPath().equals("None")) {
 			vertexIdsInReverseOrder.push(
 				currentVertex.getPrevVertexInShortestPath()
@@ -264,7 +259,7 @@ public class EncontrarAgua {
 			currentVertex = graph.obtenerVertice(
 				graph,
 				currentVertex.getPrevVertexInShortestPath()
-			);
+			);	
 		}
 		while (!vertexIdsInReverseOrder.empty()) {
 			path.add(
