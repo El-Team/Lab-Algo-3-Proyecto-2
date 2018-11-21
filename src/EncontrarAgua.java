@@ -15,6 +15,8 @@ import java.nio.charset.Charset;
 import java.io.IOException;
 import java.util.Stack;
 
+import java.util.NoSuchElementException;
+
 public class EncontrarAgua {
 
 	/**
@@ -393,6 +395,23 @@ public class EncontrarAgua {
 				.getId()
 		)
 		.setDato(0);
+
+		String idVerticeFinal = shortestPath.getPath()
+			.get(shortestPath.getPath().size() - 1)
+			.getId();
+		
+		List<String> edgeToDelete = new ArrayList<>();
+		for(String edgeId : caseGraph.getEdges().keySet()) {
+			Arista<Integer> edge = caseGraph.obtenerArista(caseGraph, edgeId);
+			if (edge.getExtremo1().getId().equals(idVerticeFinal) ||
+				edge.getExtremo2().getId().equals(idVerticeFinal)) {
+				edgeToDelete.add(edgeId);
+			}
+		}
+		for(String edgeId : edgeToDelete) {
+			caseGraph.eliminarArista(caseGraph, edgeId);
+		}
+
 		caseGraph.eliminarVertice(
 			caseGraph,
 			shortestPath.getPath()
@@ -400,11 +419,10 @@ public class EncontrarAgua {
 				.getId()
 		);
 
-
 		// Re-inicializar vértices
 		for (Vertice v : caseGraph.vertices(caseGraph)) {
 			v.setShortestDist(Double.MAX_VALUE);
-			v.setPrevVertexInShortestPath(null);
+			v.setPrevVertexInShortestPath("None");
 		}
 
 	}
