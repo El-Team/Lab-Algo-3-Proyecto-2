@@ -252,6 +252,9 @@ public class EncontrarAgua {
 
 		// Construir atributo path
 		ArrayList<Vertice> path = new ArrayList();
+
+		//System.out.println(currentVertex.toString());
+
 		while (!currentVertex.getPrevVertexInShortestPath().equals("None")) {
 			vertexIdsInReverseOrder.push(
 				currentVertex.getPrevVertexInShortestPath()
@@ -345,6 +348,62 @@ public class EncontrarAgua {
 	}
 
 	/**
+	 * Actualiza los valores de capacidad de las aristas, y en caso de haber
+	 * agotado toda la capacidad de una arista, la elimina. Asimismo, actualiza
+	 * la capacidad del edificio y el baño a donde se mandó a la gente y
+	 * reinicia los valores shortestDist y prevVertexInShortestPath en todos los
+	 * vértices. Nótese que se decidió hacer la inicialización de los vértices
+	 * aquí y no en applyBelmanFordTo() porque en la primera llamada al
+	 * algoritmo los valores ya están correctamente inicializados.
+	 */
+	private static void updateGraph(
+		GrafoNoDirigido<Integer, Integer> caseGraph,
+		ShortestPath shortestPath,
+		int peopleSent
+	) {
+		// Actualizar aristas
+		for (String edgeId : shortestPath.getPathEdges()) {
+			if (
+				Integer.parseInt(
+					(String)caseGraph.obtenerArista(caseGraph, edgeId).getDato()
+				) - peopleSent > 0
+			) {
+				caseGraph.obtenerArista(caseGraph, edgeId).setDato(
+					Integer.parseInt(
+						(String)caseGraph.obtenerArista(caseGraph, edgeId).getDato()
+					) - peopleSent
+				);
+			}
+			else {
+				caseGraph.eliminarArista(caseGraph, edgeId);
+			}
+		}
+
+		// Actualizar vértices afectados
+		caseGraph.obtenerVertice(
+			caseGraph,
+			shortestPath.getPath()
+				.get(shortestPath.getPath().size() - 2)
+				.getId()
+		)
+		.setDato(0);
+		caseGraph.eliminarVertice(
+			caseGraph,
+			shortestPath.getPath()
+				.get(shortestPath.getPath().size() - 1)
+				.getId()
+		);
+
+
+		// Re-inicializar vértices
+		for (Vertice v : caseGraph.vertices(caseGraph)) {
+			v.setShortestDist(Double.MAX_VALUE);
+			v.setPrevVertexInShortestPath(null);
+		}
+
+	}
+
+	/**
 	 * Obtiene el mayor número de personas que se pueden enviar a través del
 	 * camino suministrado (determinado por el mínimo de las capacidades de
 	 * las aristas), asigna este valor al atributo peopleSent del camino y
@@ -356,42 +415,29 @@ public class EncontrarAgua {
 		GrafoNoDirigido<Integer, Integer> graph,
 		int totalNumOfPeople
 	) {
+
 		// Obtener el número de gente que se puede enviar
 		int peopleSent = Integer.MAX_VALUE;
 		for (String edgeId : shortestPath.getPathEdges()) {
 			if (
 				Integer.parseInt(
-					(String)graph.obtenerArista(graph, edgeId).getDato()
+					String.valueOf(graph.obtenerArista(graph, edgeId).getDato())
 				) <
 				peopleSent
 			) {
 				peopleSent = Integer.parseInt(
-					(String)graph.obtenerArista(graph, edgeId).getDato()
+					String.valueOf(graph.obtenerArista(graph, edgeId).getDato())
 				);
 			}
 		}
+
 
 		// Mandar a la gente
 		peopleSent = peopleSent>totalNumOfPeople ? totalNumOfPeople : peopleSent;
 		shortestPath.setPeopleSent(peopleSent);
 
-		// Actualizar grafo
-		for (String edgeId : shortestPath.getPathEdges()) {
-			if (
-				Integer.parseInt(
-					(String)graph.obtenerArista(graph, edgeId).getDato()
-				) - peopleSent > 0
-			) {
-				graph.obtenerArista(graph, edgeId).setDato(
-					Integer.parseInt(
-						(String)graph.obtenerArista(graph, edgeId).getDato()
-					) - peopleSent
-				);
-			}
-			else {
-				graph.eliminarArista(graph, edgeId);
-			}
-		}
+
+		updateGraph(graph, shortestPath, peopleSent);
 	}
 	
 	/**
@@ -415,7 +461,7 @@ public class EncontrarAgua {
 
 				remainingPeople = remainingPeople - shortestPath.getPeopleSent();
 				shortestPaths = getShortestPathsToBathroomsFor(caseGraph, origin);
-				numOfAvailablePaths = shortestPaths.size();	
+				numOfAvailablePaths = shortestPaths.size();
 			}
 
 			System.out.println("\n\t" + remainingPeople + " personas sin asignar");

@@ -585,6 +585,9 @@ public class GrafoNoDirigido<V, L> implements Grafo<V, L> {
 
 		Arista<L> shortestArista = null;
 
+		//System.out.println(v1);
+		//System.out.println(v2);
+
 		for (Lado l : this.lados(this)) {
 			Arista<L> e = (Arista<L>)l;
 			if (
